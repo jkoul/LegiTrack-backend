@@ -1,7 +1,21 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+require_relative './bill_data.rb'
+
+Bill.destroy_all
+
+bill_data = get_bills()
+
+bill_data.each do |bill|
+  Bill.create!({
+    billNumber:       bill["billNumber"],
+    category:         bill["category"],
+    billType:         bill["billType"],
+    title:            bill["title"],
+    introDate:        bill["introDate"],
+    status:           bill["status"],
+    actNumber:        bill["actNumber"],
+    lawNumber:        bill["lawNumber"],
+    committeeReferral: bill["committeeReferral"],
+    introducedBy:     bill["introducedBy"],
+    cosponsors:       bill["cosponsors"]
+  })
+end
